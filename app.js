@@ -1,8 +1,20 @@
 //list for submit
-document.getElementById('loan-form').addEventListener('submit', calculateResults)
+document.getElementById('loan-form').addEventListener('submit', function(e){
+
+  //hide results immediately
+  document.getElementById('results').style.display = 'none';
+
+  //show loading gif
+  document.getElementById('loading').style.display = 'block';
+
+  setTimeout(calculateResults, 2000);
+
+
+  e.preventDefault() //form submit, so we prevent default
+})
 
 //calculate results
-function calculateResults(e){
+function calculateResults(){
   console.log('Calculating...')
 
   //Grab UI inputs
@@ -28,13 +40,18 @@ function calculateResults(e){
     monthlyPayment.value = monthly.toFixed(2);
     totalPayment.value = (monthly * calculatedPayments).toFixed(2);
     totalInterest.value = ((monthly * calculatedPayments) - principal).toFixed(2);
+
+    //shows results 
+    document.getElementById('results').style.display = 'block';
+
+    //hides loading gif 
+    document.getElementById('loading').style.display = 'none';
   } else {
     showError('Please check your numbers');
+    //hides loading gif 
+    document.getElementById('loading').style.display = 'none';
   }
 
-
-
-  e.preventDefault() //form submit, so we prevent default
 }
 
 //show errors
